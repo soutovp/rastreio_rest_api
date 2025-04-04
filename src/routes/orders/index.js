@@ -7,18 +7,12 @@ router.get('/', (req, res) => {
 	res.json({ message: 'Hello World' });
 });
 
-router.get('/:id', (req, res) => {
-	const token = validation.getToken();
-	console.log(token);
-	const date = new Date().getTime();
+router.get('/:id', async (req, res) => {
+	await validation.validate();
 	fs.readFile('./src/db/token.json', 'utf-8', (err, data) => {
 		const response = JSON.parse(data);
-		console.log(date);
-		console.log(response.iSet['expires-in']);
-		if (date > response.iSet['expires-in']) {
-			console.log('Precisa gerar outro TOKEN');
-		}
-		if (err) return console.log(err);
+		console.log(response.iSet.expires_in);
+		console.log(response.iSet.token);
 		res.json(JSON.parse(data));
 	});
 });

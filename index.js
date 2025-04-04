@@ -1,13 +1,10 @@
 import express from 'express';
 import env from 'dotenv';
 import { router as orders } from './src/routes/orders/index.js';
-import helmet from 'helmet';
 import fs from 'fs';
 import Validation from './src/services/validation/validation.js';
 env.config();
 export const app = express();
-// app.use(helmet());
-
 export const validation = new Validation();
 
 app.use('/orders', orders);
