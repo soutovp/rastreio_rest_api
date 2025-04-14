@@ -1,7 +1,6 @@
 import app from 'express';
 export const router = app.Router();
-import { db, validation } from '../../../index.js';
-import { orders } from '../../../index.js';
+import { db, validation } from '../../services/start/inicialization.js';
 router.get('/', async (req, res) => {
 	console.log('ORDERS		| Sending list to the client..');
 	res.json(db.orders);

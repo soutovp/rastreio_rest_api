@@ -1,40 +1,36 @@
 import fs from 'fs';
 const _key = Symbol();
-// const _token = Symbol('token');
-// const _expires_in = Symbol('expires_in');
 export default class Validation {
 	constructor(key) {
 		this[_key] = `Basic ${btoa(`${key.user}:${key.pass}`)}`;
 		this._token = '';
 		this._expires_in = '';
+		this.authenticate();
+		setInterval(() => this.authenticate(), 60000);
 	}
 	get token() {
 		return this._token;
 	}
-	set token(value) {
-		this._token = value;
-	}
 	get expires_in() {
 		return this._expires_in;
-	}
-	set expires_in(value) {
-		this._expires_in = value;
 	}
 	getTodaysDate() {
 		return parseInt(new Date().getTime() / 1000);
 	}
-	getSavedData() {
+	db_updateVariables() {
+		console.log('Atualizando variáveis de Validation');
 		return new Promise((resolve, reject) => {
 			fs.readFile(
 				'./src/db/token.json',
 				'utf-8',
 				function (err, data) {
-					if (err) console.log(`Erro: ${err}`);
+					if (err) reject({ status: 403, message: err.message });
 					if (data) {
 						const parsedData = JSON.parse(data);
-						this.token = parsedData.token;
-						this.expires_in = parsedData.expires_in;
-						resolve();
+						if (parsedData.status === 403) resolve({ status: 200, message: parsedData.message });
+						this._token = parsedData.token;
+						this._expires_in = parsedData.expires_in;
+						resolve({ status: 200, message: 'OK' });
 					} else {
 						reject({ status: 403, message: 'Não há dados salvos de acesso.\nPor favor solicite um novo Token de acesso!' });
 					}
@@ -42,24 +38,18 @@ export default class Validation {
 			);
 		});
 	}
-	saveDataDB(data) {
-		if (typeof objetosDados !== 'object') {
-			console.log(`DB		| Salvando dados no Banco de Dados`);
-			fs.writeFile('./src/db/token.json', JSON.stringify(data), (err) => {
-				console.error(err);
-			});
-		} else {
-			console.log(`DB		| Salvando dados no Banco de Dados`);
-			fs.writeFile('./src/db/token.json', data, (err) => {
-				console.error(err);
-			});
-		}
+	db_save(data) {
+		return new Promise((resolve, reject) => {
+			if (typeof data === 'object') fs.writeFile('./src/db/token.json', JSON.stringify(data), (err) => reject(err));
+			if (typeof data === 'string') fs.writeFile('./src/db/token.json', data, (err) => reject(err));
+			this.db_updateVariables();
+			resolve();
+		});
 	}
-	authenticate = async function () {
-		await this.getSavedData();
+	async authenticate() {
+		await this.db_updateVariables();
 		if (this.expires_in < this.getTodaysDate()) {
-			console.log(`Authentication	| Token is expired, getting a new one.`);
-			return fetch('https://www.nortondistribuidora.com.br/ws/v1/oauth', {
+			return await fetch('https://www.nortondistribuidora.com.br/ws/v1/oauth', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -67,21 +57,23 @@ export default class Validation {
 				},
 			})
 				.then((response) => {
+					if (response.status === 403) console.error(response.statusText);
 					return response.json();
 				})
 				.then((data) => {
+					if (data.status === 403) return console.log(data);
 					if (data.status === 200) {
 						console.log(data);
-						this.saveDataDB(data);
+						this.db_save(data);
+						this.db_updateVariables();
 						return data.token;
 					}
 					if (data.status === 403) return this.token;
-					return this.token;
+					if (data.status !== 200 && data.status !== 403) console.log(data);
 				})
 				.catch((error) => error);
 		} else {
-			console.log(`Authentication	| Token is valid.`);
 			return this.token;
 		}
-	};
+	}
 }

@@ -1,33 +1,62 @@
-import express from 'express';
 import env from 'dotenv';
 env.config();
-import cors from 'cors';
-import { router as ordersRouter } from './src/routes/orders/index.js';
+import Server from './server.js';
+import DB from './src/db/DB.js';
 import Validation from './src/services/validation/validation.js';
-import DB from './src/db/BD.js';
-export const app = express();
+
 export const db = new DB();
 export const validation = new Validation({ user: process.env.ISET_ACCESS_USER, pass: process.env.ISET_ACCESS_KEY });
-import Orders from './src/models/Orders/Orders.js';
-export const orders = new Orders();
-validation.getSavedData();
-setInterval(async () => {
-	await orders.update();
-}, 60000);
-await orders.update();
-db.saveData(orders.list);
+const server = new Server(process.env.PORT);
 
-app.use(express.json());
-app.use(cors());
-app.use('/orders', ordersRouter);
-
-app.get('/', async (req, res) => {
-	const token = await validation.authenticate();
-	if (typeof token === 'object') return res.send(token.message);
-	console.log(`GET		| Token é: ${token}`);
-	res.json({ token: token });
+server.app.get('/token', async (req, res) => {
+	console.log('Getting token');
+	res.json(validation.token);
 });
+server.app.get('/galvanotek/:search', async (req, res) => {
+	const search = req.params.search;
+	// const itens = stringItens.split('\n');
 
-app.listen(process.env.PORT, () => {
-	console.log(`Servidor rodando na porta ${process.env.PORT}`);
+	// let products = [];
+	// for (let item of itens) {
+	// 	let itemSplited = item.split('|');
+	// 	products.push({
+	// 		status: 0,
+	// 		cod_ref: itemSplited[0],
+	// 		name: itemSplited[1],
+	// 		price: itemSplited[2],
+	// 		quantity: 0,
+	// 	});
+	// }
+	// for (let product of products) {
+	// await fetch('https://www.nortondistribuidora.com.br/ws/v1/coupons/insert', {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json',
+	// 	},
+	// });
+	// console.log(product);
+	// }
+	await fetch('https://www.nortondistribuidora.com.br/ws/v1/product/search', {
+		method: 'POST',
+		headers: {
+			'access-token': validation.token,
+		},
+		body: JSON.stringify({
+			query: search,
+			limit: 10,
+			img_w: 50,
+			img_h: 50,
+		}),
+	})
+		.then((response) => {
+			// if (response.status === 400) return console.log(response.statusText);
+			if (response.status === 200) return response.json();
+			if (response.status === 403) return response.json();
+
+			res.json({ status: response.status, message: response.statusText });
+		})
+		.then((data) => {
+			if (data === undefined) return;
+			res.json(data);
+		});
 });

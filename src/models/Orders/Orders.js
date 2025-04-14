@@ -1,4 +1,4 @@
-import { db, validation } from '../../../index.js';
+import { validation } from '../../services/start/inicialization.js';
 
 const _list = Symbol('list');
 export default class Orders {
@@ -11,7 +11,6 @@ export default class Orders {
 		const yesterday = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate() - 1).toString().padStart(2, '0')}`;
 		const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 		const autentication = await validation.authenticate();
-		console.log(autentication);
 		let newOrders = await fetch('https://www.nortondistribuidora.com.br/ws/v1/order/list', {
 			method: 'POST',
 			headers: {
@@ -28,7 +27,7 @@ export default class Orders {
 			}),
 		})
 			.then((response) => {
-				if (response.status === 400) return { message: response.statusText };
+				if (response.status === 400) return { status: 400, message: response.statusText };
 				if (response.status === 200) return response.json();
 				return { status: response.status, message: response.statusText };
 			})
@@ -38,7 +37,7 @@ export default class Orders {
 				}
 			});
 		this[_list] = newOrders;
-		return;
+		return { status: 200, message: 'ok' };
 	}
 	get list() {
 		return this[_list];
