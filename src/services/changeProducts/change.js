@@ -1,7 +1,7 @@
 export const stringItens = `GA00161|G32MMSF Mini Torta Baixa 750g Branca Simplifc Galvanotek Cx/80un - 556489|62,48
 GA00152|G 220 Embalagem para Forno Retangular 500ml Preta Com Tampa GalvanotekCx/100un - 565958|197,16
-GA00165|G 232 Embalagem para Forno Bolo Caseiro Preta Com Tampa Galvanotek Cx/50un - 565088|201,52
-GA00141|G 240 Embalagem para Forno Retangular 800ml Preta Com Tampa Galvanotek Cx/100un - 563657|184,40
+GA00165|G 232 Embalagem para Forno Bolo Caseiro Preta Com Tampa Galvanotek Cx/50un - 565088|201,52`;
+export const stringItens_old = `GA00141|G 240 Embalagem para Forno Retangular 800ml Preta Com Tampa Galvanotek Cx/100un - 563657|184,40
 GA00109|G 300 Embalagem Retangular 1.600ml Freezer e Micro-Ondas 234x153x51mm GAlvanotek Cx/100un - 550791|352,25
 GA00005|G 301 Embalagem Retangular 1.000ml Freezer e Micro-Ondas Galvanotek Cx/100un - 550792|300,63
 GA00045|G 302 Embalagem Retangular 700ml Freezer e Micro-Ondas Galvanotek Cx/100un - 550793|162,07
@@ -16,7 +16,6 @@ GA00043|G03C Bandeja Multiuso para Frios Doces e Salgados Galvanotek Cx/400un - 
 GA00022|G100 Embalagem Para Frango Assado Com Tampa Freezer e Micro-Ondas Branca Galvanotek Cx/100un - 550783|142,58
 GA00027|G14 Embalagem para 02 Doces Galvanotek Cx/100un - 550083|57,12
 GA00029|G15 Embalagem para 04 Doces Galvanotek Cx/100un - 550085|105,46
-GA00030|G16 Embalagem para 06 Doces Galvanotek Cx/100un - 550086|150,83
 GA00188|G220SF Embalagem Forneável Retangular Bolo Inglês Pretga com Tampa Galvanotek Cx/900 - 573276|168,69
 GA00049|G304 Pote Retangular 180ml Freezer/Microondas Galvanotek Cx/300 - 550797|172,06
 GA00189|G321 Bandeja 2 Divisória 475ml Freezer/Microondas Galvanotek - 573779|87,93
@@ -26,7 +25,6 @@ GA00067|G32CTB Mini Torta Baixa 700g Preta Contemporânea Galvanotek Cx/100un - 
 GA00075|G32F Mini Torta 750g Branca Flower Galvanotek Cx/100un - 550740|182,27
 GA00162|G32MB Mini Torta Baixa 750g Branca Millenium Galvanotek Cx/100un - 550222|83,28
 GA00015|G32MM Mini Torta Baixa 750g Branca Millenium Galvanotek Cx/100un - 550004|84,88
-GA00073|G32SB Mini Torta Baixa 700g Preta Suprema Galvanotek Cx/100un - 558448|166,39
 GA00110|G33 Panetone 500g Galvanotek Cx/100un - 550819|152,09
 GA00032|G330 Bandeja Refeição 3 Divisórias 1.150ml Com Tampa Freezer e Micro-Ondas Branca Galvanotek Cx/100un- 550806 Branca|258,56
 GA00123|G330 Bandeja Refeição 3 Divisórias 1.150ml Com Tampa Freezer e Micro-Ondas Preta Galvanotek Cx/100un - 551211 Preta|326,67
@@ -52,7 +50,6 @@ GA00131|G60CT Torta Grande 2Kg Contemporânea Galvanotek Cx/50un - 550629|313,59
 GA00160|G60MA Torta Grande Alta 2,5Kg Millenium Galvanotek Cx/50un - 550371|236,81
 GA00111|G60MB Torta Grande Branca 2,5Kg Millenium Galvanotek Cx/50un - 550430|200,78
 GA00081|G60MM Torta Grande 2,2Kg Millenium Galvanotek Cx/50un - 551229|243,60
-GA00014|G620 Um Doce Coração 260ml Galvanotek Cx/200un - 550822|152,58
 GA00117|G62M Mini Fatia de Bolo Alta 200g Millenium Galvanotek Cx/150un - 552516|130,50
 GA00065|G62S Mini Fatia de Bolo Baixa 200g Suprema Preta Galvanotek Cx/150un - 552515|110,30
 GA00003|G630 Fatia Torta Millenium Galvanotek Cx/300un - 551397|238,35
@@ -66,7 +63,6 @@ GA00130|G642D Mini Doce Redondo 100ml Diamante Galvanotek Cx/300un - 553338|95,6
 GA00002|G645 Mini Doce Redondo 120ml Doces/Salgados Linha Millenium Galvanotek Cx/300 - 550091|72,30
 GA00006|G650 Um Doce Quadrado 200ml Millenium Galvanotek Cx/300un - 550073|110,68
 GA00119|G65MM Torta Retangular Pequena 2Kg Galvanotek Cx/50un - 550448 UN 199,16
-GA00008|G670 Mousse 110ml Tampa Alta Millenium Galvanotek Cx/500un - 550074|185,98
 GA00113|G670B Mousse 110ml Tampa Baixa Millenium Galvanotek Cx/500un - 550093|185,98
 GA00173|G670SF Mousse Tampa Alta 110ml Doces/Salgados Galvanotek Cx/480 - 556476|194,00
 GA00138|G675 Mousse 70ml Tampa Alta Galvanotek Cx/500 - 550094|185,98
@@ -96,7 +92,6 @@ GA00021|G80MA Torta Jumbo 4Kg Tampa Alta Millenium Galvanotek Cx/30un - 550496|1
 GA00193|G840SF Pote com Tampa Bolha 400ml Pet Pra Levah! Galvanotek Cx/200 - 571262|190,99
 GA00192|G850SF Pote com Tampa Bolha 500ml Pet Pra Levah! Galvanotek Cx/180 - 571259|193,53
 GA00011|GA08 Leva Doce Baixo Linha Doces/Salgados Galvanotek Cx/100 - 550538|44,11
-GA00129|GA10 Embalagem Para Doce Alto Millenium Galvanotek Cx/100un - 550540|44,11
 GA00080|GA12 Hamburgueira Millenium Galvanotek Cx/100 - 550571|87,90
 GA00087|GA17 Embalagem Para Rocambole Pequeno Millenium Galvanotek Cx/100un - 550578|96,98
 GA00018|GA18 Embalagem Para Rocambole Baixo Millenium Galvanotek Cx/100un - 550580|101,91
@@ -110,5 +105,3 @@ GA00104|GO908 Embalagem para Temaki Galvanotek Cx/100 - 557233|79,21
 GA00035|GO910 Pote para Molho 60ml Linha Orientel Galvanotek cx/1000 - 555131|140,91
 GA00038|GO912 Embalagem Linha Oriental Galvanotek Cx/100 - 550777|82,25
 GA00037|GO915 Embalagem Linha Oriental Pet Galvanotek Cx/100 - 550778|142,64`;
-
-console.log(stringItens);

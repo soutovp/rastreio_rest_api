@@ -38,7 +38,7 @@ export default class DB {
 					}
 				}
 			});
-		});
+		}).catch((e) => console.log(e));
 	}
 	async getOrders() {
 		const date = new Date();
@@ -79,7 +79,7 @@ export default class DB {
 			this[_orders] = data;
 			fs.writeFile('./src/db/orders.json', JSON.stringify(data), (err) => console.log(err));
 			resolve({ status: 200, message: 'Dados salvos com sucesso no DB' });
-		});
+		}).catch((e) => console.log(e));
 	}
 }
 export class DB_old {

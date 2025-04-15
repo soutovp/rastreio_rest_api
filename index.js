@@ -1,4 +1,5 @@
 import env from 'dotenv';
+import axios from 'axios';
 env.config();
 import Server from './server.js';
 import DB from './src/db/DB.js';
@@ -12,51 +13,91 @@ server.app.get('/token', async (req, res) => {
 	console.log('Getting token');
 	res.json(validation.token);
 });
-server.app.get('/galvanotek/:search', async (req, res) => {
-	const search = req.params.search;
-	// const itens = stringItens.split('\n');
 
-	// let products = [];
-	// for (let item of itens) {
-	// 	let itemSplited = item.split('|');
-	// 	products.push({
-	// 		status: 0,
-	// 		cod_ref: itemSplited[0],
-	// 		name: itemSplited[1],
-	// 		price: itemSplited[2],
-	// 		quantity: 0,
-	// 	});
-	// }
-	// for (let product of products) {
-	// await fetch('https://www.nortondistribuidora.com.br/ws/v1/coupons/insert', {
+server.app.get('/search/:sku', async (req, res) => {
+	const sku = req.params.sku;
+	const body = {
+		search: sku,
+		limit: 10,
+		offset: 0,
+	};
+	console.log(`Tentando consultar SKU:${sku}`);
+	axios
+		.post('https://www.nortondistribuidora.com.br/ws/v1/product/search', body, {
+			headers: {
+				'access-token': validation.token,
+			},
+		})
+		.then((response) => {
+			console.log(response);
+			res.json({});
+		})
+		.catch((e) => {
+			if (e.status === 400) res.json({ status: 400, message: `Requisição falhou com code 400` });
+			res.send('No data');
+		});
+	// await fetch('https://www.nortondistribuidora.com.br/ws/v1/product/search', {
 	// 	method: 'POST',
 	// 	headers: {
-	// 		'Content-Type': 'application/json',
+	// 		'access-token': validation.token,
 	// 	},
-	// });
-	// console.log(product);
-	// }
-	await fetch('https://www.nortondistribuidora.com.br/ws/v1/product/search', {
-		method: 'POST',
+	// 	body: JSON.stringify(body),
+	// })
+	// 	.then((response) => {
+	// 		if (response.status === 400) return { status: response.status, message: response.statusText };
+	// 		response.json();
+	// 	})
+	// 	.then((data) => {
+	// 		console.log(data);
+	// 		if (data.status === 400) console.log(data.message);
+	// 		res.json(data);
+	// 	})
+	// 	.catch((e) => {
+	// 		console.log(e);
+	// 	});
+});
+import { stringItens } from './src/services/changeProducts/change.js';
+server.app.get('/galvanotek', async (req, res) => {
+	const itens = stringItens.split('\n');
+
+	let products = [];
+	for (let item of itens) {
+		let itemSplited = item.split('|');
+		products.push({
+			status: 0,
+			cod_ref: itemSplited[0],
+			name: itemSplited[1],
+			price: itemSplited[2],
+			quantity: 0,
+		});
+	}
+	// res.json(products);
+	for (let product of products) {
+		console.log(product);
+		await axios({
+			method: 'post',
+			url: 'https://www.nortondistribuidora.com.br/ws/v1/product/search',
+			data: product,
+		})
+			.then((data) => {
+				if (data.response.status === 400) console.log(data.response.message);
+			})
+			.catch((e) => {
+				console.log(e.response.message);
+			});
+	}
+	res.json({ status: 200, message: 'Dados inseridos com sucesso!' });
+});
+server.app.get('/entregas', (req, res) => {
+	axios({
+		method: 'get',
+		url: 'https://www.nortondistribuidora.com.br/ws/v1/shipping/list',
 		headers: {
 			'access-token': validation.token,
 		},
-		body: JSON.stringify({
-			query: search,
-			limit: 10,
-			img_w: 50,
-			img_h: 50,
-		}),
-	})
-		.then((response) => {
-			// if (response.status === 400) return console.log(response.statusText);
-			if (response.status === 200) return response.json();
-			if (response.status === 403) return response.json();
+	}).then((data) => {
+		console.log(data);
 
-			res.json({ status: response.status, message: response.statusText });
-		})
-		.then((data) => {
-			if (data === undefined) return;
-			res.json(data);
-		});
+		res.json(data.data);
+	});
 });
