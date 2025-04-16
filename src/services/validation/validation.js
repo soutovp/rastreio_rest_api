@@ -55,7 +55,7 @@ export default class Validation {
 			const response = await this.db_updateVariables();
 			if (response === 200) console.log(response.message);
 		} catch (e) {
-			console.log(e.message);
+			console.log(e);
 			return;
 		} finally {
 			if (this.expires_in <= this.getTodaysDate()) {
@@ -77,7 +77,7 @@ export default class Validation {
 								const response = await this.db_save(data);
 								if (response.status === 200) console.log(response.message);
 							} catch (e) {
-								console.log(e.message);
+								console.log(e);
 							}
 						}
 						if (data.status !== 200 && data.status !== 403) console.log(data);

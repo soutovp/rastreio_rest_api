@@ -4,10 +4,24 @@ env.config();
 import Server from './server.js';
 import DB from './src/db/DB.js';
 import Validation from './src/services/validation/validation.js';
+import { stringItens } from './src/services/changeProducts/change.js';
+import Rastreio from './src/models/Orders/Rastreio.js';
 
 export const db = new DB();
 export const validation = new Validation({ user: process.env.ISET_ACCESS_USER, pass: process.env.ISET_ACCESS_KEY });
 const server = new Server(process.env.PORT);
+let newTrack = new Rastreio({
+	client: {
+		name: 'Fernando Souto',
+		cpf: '156.595.587-04',
+		whatsapp: '5521970769075',
+	},
+	idIset: 1326,
+	status: 'Pedido em Separação',
+});
+server.app.get('/track', async (req, res) => {
+	res.json(db.saveTrack({ message: 'recebido' }));
+});
 
 server.app.get('/token', async (req, res) => {
 	console.log('Getting token');
@@ -56,7 +70,7 @@ server.app.get('/search/:sku', async (req, res) => {
 	// 		console.log(e);
 	// 	});
 });
-import { stringItens } from './src/services/changeProducts/change.js';
+
 server.app.get('/galvanotek', async (req, res) => {
 	const itens = stringItens.split('\n');
 

@@ -81,6 +81,15 @@ export default class DB {
 			resolve({ status: 200, message: 'Dados salvos com sucesso no DB' });
 		}).catch((e) => console.log(e));
 	}
+	saveTrack(data) {
+		let tracks = fs.readFileSync('./src/db/tracks.json', 'utf-8');
+		for (item of data) {
+			tracks[item.idIset] = item;
+		}
+		let result = fs.writeFileSync('./src/db/tracks.json', JSON.stringify(data), (err) => console.log(err));
+		console.log(result);
+		return result;
+	}
 }
 export class DB_old {
 	constructor() {

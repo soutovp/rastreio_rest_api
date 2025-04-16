@@ -1,7 +1,5 @@
-export const stringItens = `GA00161|G32MMSF Mini Torta Baixa 750g Branca Simplifc Galvanotek Cx/80un - 556489|62,48
-GA00152|G 220 Embalagem para Forno Retangular 500ml Preta Com Tampa GalvanotekCx/100un - 565958|197,16
-GA00165|G 232 Embalagem para Forno Bolo Caseiro Preta Com Tampa Galvanotek Cx/50un - 565088|201,52`;
-export const stringItens_old = `GA00141|G 240 Embalagem para Forno Retangular 800ml Preta Com Tampa Galvanotek Cx/100un - 563657|184,40
+export const stringItens = ``;
+export const stringItens_old = `
 GA00109|G 300 Embalagem Retangular 1.600ml Freezer e Micro-Ondas 234x153x51mm GAlvanotek Cx/100un - 550791|352,25
 GA00005|G 301 Embalagem Retangular 1.000ml Freezer e Micro-Ondas Galvanotek Cx/100un - 550792|300,63
 GA00045|G 302 Embalagem Retangular 700ml Freezer e Micro-Ondas Galvanotek Cx/100un - 550793|162,07
