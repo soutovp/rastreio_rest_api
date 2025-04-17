@@ -1,3 +1,4 @@
 {
-	"ignore": ["src/db/*.json"]
+	"verbose": true,
+	"ignore": ["./src/db/*.json", "./sessions/*.json"]
 }
