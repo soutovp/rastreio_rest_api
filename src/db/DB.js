@@ -82,13 +82,14 @@ export default class DB {
 		}).catch((e) => console.log(e));
 	}
 	saveTrack(data) {
-		let tracks = fs.readFileSync('./src/db/tracks.json', 'utf-8');
-		for (item of data) {
+		if (typeof data !== 'object') return 'Data must be an Array of Objects. Received: ' + typeof data;
+		if (!data[0].idIset) return 'ID not find it';
+		let tracks = JSON.parse(fs.readFileSync('./src/db/tracks.json', 'utf-8'));
+		for (let item of data) {
 			tracks[item.idIset] = item;
 		}
-		let result = fs.writeFileSync('./src/db/tracks.json', JSON.stringify(data), (err) => console.log(err));
-		console.log(result);
-		return result;
+		fs.writeFileSync('./src/db/tracks.json', JSON.stringify(tracks), (err) => console.log(err));
+		return tracks;
 	}
 }
 export class DB_old {

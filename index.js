@@ -20,7 +20,8 @@ let newTrack = new Rastreio({
 	status: 'Pedido em Separação',
 });
 server.app.get('/track', async (req, res) => {
-	res.json(db.saveTrack({ message: 'recebido' }));
+	let result = db.saveTrack([newTrack.getRastreio]);
+	res.json(result);
 });
 
 server.app.get('/token', async (req, res) => {
